@@ -17,7 +17,7 @@ app.post('/extract-cookies', async (req, res) => {
     try {
         const browser = await puppeteer.launch({ 
             headless: true,
-            executablePath: executablePath(), // This uses Puppeteer's bundled Chromium
+            executablePath: '/usr/bin/google-chrome', // This uses Puppeteer's bundled Chromium
             args: ['--no-sandbox', '--disable-setuid-sandbox'] // Necessary for cloud environments
         });
 
