@@ -14,7 +14,8 @@ app.post('/extract-cookies', async (req, res) => {
     }
 
     try {
-        const browser = await puppeteer.launch({ headless: false });
+        const browser = await puppeteer.launch({  headless: true,
+            args: ['--no-sandbox', '--disable-setuid-sandbox'] });
         const page = await browser.newPage();
 
         await page.goto('https://www.linkedin.com/login');
