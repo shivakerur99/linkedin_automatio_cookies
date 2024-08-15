@@ -1,5 +1,6 @@
 const express = require('express');
 const puppeteer = require('puppeteer');
+import { executablePath } from 'puppeteer';
 const app = express();
 const port = 3000;
 
@@ -15,7 +16,8 @@ app.post('/extract-cookies', async (req, res) => {
 
     try {
         const browser = await puppeteer.launch({  headless: true,
-            args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+            executablePath: executablePath(),
+            args: ['--no-sandbox', '--disable-setuid-sandbox']});
         const page = await browser.newPage();
 
         await page.goto('https://www.linkedin.com/login');
