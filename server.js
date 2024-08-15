@@ -1,6 +1,6 @@
 const express = require('express');
 const puppeteer = require('puppeteer');
-import { executablePath } from 'puppeteer';
+const executablePath=require('puppeteer');
 const app = express();
 const port = 3000;
 
