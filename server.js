@@ -16,7 +16,6 @@ app.post('/extract-cookies', async (req, res) => {
 
     try {
         const browser = await puppeteer.launch({
-            headless: false,
             args: [
                 "--disable-setuid-sandbox",
                 "--no-sandbox",
