@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Cookie Extractor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        input {
+            margin-bottom: 10px;
+            padding: 8px;
+            width: 100%;
+        }
+        button {
+            padding: 10px;
+            width: 100%;
+            background-color: #0077b5;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #005b9a;
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>LinkedIn Cookie Extractor</h1>
+        <form id="loginForm">
+            <input type="text" id="email" placeholder="LinkedIn Email" required>
+            <input type="password" id="password" placeholder="LinkedIn Password" required>
+            <button type="submit">Login and Extract Cookies</button>
+        </form>
+        <div class="message" id="message"></div>
+        <div class="cookies" id="cookies"></div>
+        
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const messageElement = document.getElementById('message');
+            const cookiesElement = document.getElementById('cookies');
+
+            try {
+                const response = await fetch('/extract-cookies', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                messageElement.textContent = 'Cookies extracted successfully!';
+                // You might want to display or store the cookies here.
+                cookiesElement.textContent = JSON.stringify(data.cookies, null, 2);
+
+            } catch (error) {
+                messageElement.textContent = 'Error extracting cookies.';
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>
