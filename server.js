@@ -1,6 +1,7 @@
 const express = require('express');
 const puppeteer = require('puppeteer-core'); // Use puppeteer-core to specify custom Chromium path
 const { executablePath } = require('puppeteer'); // This will provide the path to the Chromium installed by Puppeteer
+require('dotenv').config();
 const app = express();
 const port = 3000;
 
