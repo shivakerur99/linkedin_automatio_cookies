@@ -1,6 +1,6 @@
 const express = require('express');
-const puppeteer = require('puppeteer');
-const executablePath=require('puppeteer');
+const puppeteer = require('puppeteer-core'); // Use puppeteer-core to specify custom Chromium path
+const { executablePath } = require('puppeteer'); // This will provide the path to the Chromium installed by Puppeteer
 const app = express();
 const port = 3000;
 
@@ -15,11 +15,13 @@ app.post('/extract-cookies', async (req, res) => {
     }
 
     try {
-        const browser = await puppeteer.launch({  headless: true,
-            executablePath: executablePath(),
-            args: ['--no-sandbox', '--disable-setuid-sandbox']});
-        const page = await browser.newPage();
+        const browser = await puppeteer.launch({ 
+            headless: true,
+            executablePath: executablePath(), // This uses Puppeteer's bundled Chromium
+            args: ['--no-sandbox', '--disable-setuid-sandbox'] // Necessary for cloud environments
+        });
 
+        const page = await browser.newPage();
         await page.goto('https://www.linkedin.com/login');
         await page.type('#username', email);
         await page.type('#password', password);
